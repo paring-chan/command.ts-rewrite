@@ -1,6 +1,6 @@
-import Command from "../types/Command";
+import CTSCommand from "../types/CTSCommand";
 
 export default class Module {
-    static commands: Command[] = []
+    static commands: CTSCommand[] = []
 
 }

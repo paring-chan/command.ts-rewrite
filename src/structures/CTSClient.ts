@@ -2,8 +2,11 @@ import {Client, ClientEvents, ClientOptions, Message} from 'discord.js'
 import CTSOptions from "../types/CTSOptions";
 
 export default class CTSClient extends Client {
+    opts: CTSOptions
+
     constructor(ctsOpts: CTSOptions, clientOptions?: ClientOptions) {
         super(clientOptions)
+        this.opts = ctsOpts
     }
 
     private _handle<K extends keyof ClientEvents>(event: K, ...args: any[]) {
@@ -11,6 +14,9 @@ export default class CTSClient extends Client {
     }
 
     private _handleMsg(msg: Message) {
+        if (msg.author.bot) return
+        const prefix = this.opts.prefix
+
     }
 
     emit(event: string, ...args: any[]): boolean {
