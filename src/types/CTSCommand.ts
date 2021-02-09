@@ -9,6 +9,7 @@ type CTSCommand = {
     userPermissions: PermissionResolvable
     clientPermissions: PermissionResolvable
     execute: Function
+    guildOnly: boolean
 }
 
 export default CTSCommand

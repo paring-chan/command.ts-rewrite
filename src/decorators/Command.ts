@@ -10,24 +10,27 @@ export type CommandOptions = {
     ownerOnly?: boolean
     userPermissions?: PermissionResolvable
     clientPermissions?: PermissionResolvable
+    guildOnly?: boolean
 }
 
 export function Command(opts: CommandOptions): any {
     return async (target: any, key: string, descriptor: PropertyDescriptor) => {
-        console.log(target)
         if (!(target instanceof Module)) throw new Error('Command decorator must be used in `Module` class.')
+        const c = target.constructor as typeof Module
         if (!opts) opts = {name: key}
-        const {name, userPermissions, ownerOnly, clientPermissions, subcommands, useSubCommand, aliases} = opts
+        const {name, userPermissions, ownerOnly, clientPermissions, subcommands, useSubCommand, aliases, guildOnly} = opts
         const cmd: CTSCommand = {
             name,
             aliases: aliases || [],
             subcommands: subcommands || [],
-            useSubCommand: useSubCommand || false,
-            ownerOnly: ownerOnly || false,
+            useSubCommand: !!useSubCommand,
+            ownerOnly: !!ownerOnly,
             userPermissions: userPermissions || [],
             clientPermissions: clientPermissions || [],
-            execute: descriptor.value
+            execute: descriptor.value,
+            guildOnly: !!guildOnly
         }
+        c.commands.push(cmd)
     }
 }
 
