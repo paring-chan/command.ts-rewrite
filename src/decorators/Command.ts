@@ -1,6 +1,7 @@
 import CTSCommand from "../types/CTSCommand";
 import {PermissionResolvable} from "discord.js";
 import Module from "../structures/Module";
+import CTSArgument from "../types/CTSArgument";
 
 export type CommandOptions = {
     name: string
@@ -11,6 +12,7 @@ export type CommandOptions = {
     userPermissions?: PermissionResolvable
     clientPermissions?: PermissionResolvable
     guildOnly?: boolean
+    args?: CTSArgument[]
 }
 
 export function Command(opts: CommandOptions): any {
@@ -28,7 +30,8 @@ export function Command(opts: CommandOptions): any {
             userPermissions: userPermissions || [],
             clientPermissions: clientPermissions || [],
             execute: descriptor.value,
-            guildOnly: !!guildOnly
+            guildOnly: !!guildOnly,
+            args: opts.args || []
         }
         c.commands.push(cmd)
     }

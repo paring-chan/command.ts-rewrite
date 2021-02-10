@@ -1,4 +1,5 @@
 import {PermissionResolvable} from "discord.js";
+import CTSArgument from "./CTSArgument";
 
 type CTSCommand = {
     name: string
@@ -10,6 +11,7 @@ type CTSCommand = {
     clientPermissions: PermissionResolvable
     execute: Function
     guildOnly: boolean
+    args: CTSArgument[]
 }
 
 export default CTSCommand
