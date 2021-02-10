@@ -18,7 +18,15 @@ export default class CTSClient extends Client {
     }
 
     private _handle<K extends keyof ClientEvents>(event: K, ...args: any[]) {
-        if (event === 'message') return this._handleMsg(args[0])
+        if (event === 'message') this._handleMsg(args[0])
+        const modules = this.registry.modules
+        for (const module of modules) {
+            const cl = module.constructor as typeof Module
+            const listeners = cl.listeners.filter(r => r.event === event)
+            for (const listener of listeners) {
+                listener.execute.apply(module, args)
+            }
+        }
     }
 
     private async _parseArgs(args: string[], types: CTSArgument[], msg: Message): Promise<any[] | false> {
