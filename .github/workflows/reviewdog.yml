@@ -12,4 +12,4 @@ jobs:
         with:
           reporter: github-pr-review
           reviewdog_version: latest
-          eslint_flags: src
+          eslint_flags: --ext ts src
