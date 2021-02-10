@@ -1,4 +1,4 @@
-import {Command} from "../dist";
+import {Command, CTSClient} from "../dist";
 import Module from "../dist/structures/Module";
 
 class TestExtension extends Module {
@@ -10,4 +10,8 @@ class TestExtension extends Module {
     }
 }
 
-console.log(TestExtension.commands)
+const client = new CTSClient({
+    prefix: '!'
+})
+
+client.login(process.env.TOKEN)
