@@ -1,6 +1,12 @@
 import CTSCommand from "../types/CTSCommand";
+import {CTSClient} from "./index";
 
-export default class Module {
-    static commands: CTSCommand[] = []
-
+interface Module {
+    client: CTSClient
 }
+
+class Module {
+    static commands: CTSCommand[] = []
+}
+
+export default Module

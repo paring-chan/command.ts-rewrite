@@ -9,6 +9,7 @@ import {CTSContext} from "./index";
 export default class CTSClient extends Client {
     opts: CTSOptions
     registry: CTSRegistry
+    owners: string[] = []
 
     constructor(ctsOpts: CTSOptions, clientOptions?: ClientOptions) {
         super(clientOptions)
@@ -47,6 +48,8 @@ export default class CTSClient extends Client {
     }
 
     private async _executeCommand(cmd: CTSCommand, args: string[], msg: Message, module: Module): Promise<any> {
+        if (cmd.guildOnly && !msg.guild) return this.emit('guildOnly', msg, cmd)
+        if (cmd.ownerOnly) return this.emit('guildOnly', msg, cmd)
         if (args.length) {
             if (cmd.useSubCommand) {
                 const arg = args.shift()
@@ -91,10 +94,24 @@ export default class CTSClient extends Client {
         await this._executeCommand(cmd, args, msg, module)
     }
 
-    loadExtension() {
+    loadExtension(path: string) {
+        let mod
+        try {
+            mod = require(path)
+        } catch {
+            throw new Error('Module not found.')
+        }
+        if (!mod.default) {
+            throw new Error('Default export not found.')
+        }
+        if (!(mod.default.prototype instanceof Module)) {
+            throw new Error('Default export must extend `Module` class.')
+        }
+        const ext = new mod.default()
     }
 
     registerModule(extension: Module) {
+        extension.client = this
         this.registry.modules.push(extension)
     }
 
