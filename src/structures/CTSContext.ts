@@ -15,11 +15,11 @@ class CTSContext {
     }
 
     get send() {
-        return this.message.channel.send
+        return this.message.channel.send.bind(this.message.channel)
     }
 
     get reply() {
-        return this.message.reply
+        return this.message.reply.bind(this.message)
     }
 
 

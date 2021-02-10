@@ -12,7 +12,12 @@ class TestExtension extends Module {
             {
                 required: true
             }
-        ]
+        ],
+        subcommands: [{
+            name: 'test',
+            execute: (ctx: CTSContext) => ctx.reply('asdf'),
+        }],
+        useSubCommand: true
     })
     test2(ctx: CTSContext, arg1: string) {
         ctx.reply(arg1)
@@ -22,5 +27,7 @@ class TestExtension extends Module {
 const client = new CTSClient({
     prefix: '!'
 })
+
+client.registerModule(new TestExtension())
 
 client.login(process.env.TOKEN)
