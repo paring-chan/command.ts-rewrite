@@ -1,0 +1,12 @@
+on: push
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node
+        name: Setup node
+        with:
+          node-version: v15.8.0
+      - run: yarn
+      - run: yarn tsc
