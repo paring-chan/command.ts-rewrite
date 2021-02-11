@@ -21,7 +21,7 @@ export default class TestExtension extends Module {
     ctx.reply('test')
   }
 
-  @Listener('ready')
+  @Listener('ready1', 'ready')
   ready() {
     console.log('ready!')
   }

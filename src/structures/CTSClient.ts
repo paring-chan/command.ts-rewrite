@@ -155,6 +155,7 @@ export default class CTSClient extends Client {
             (r) => r.__path === ext.__path,
           )
           if (extension) {
+            ;(extension.constructor as typeof Module).unload()
             this.unregisterModule(extension)
             this.loadExtension(extension.__path!, true)
             console.info(
@@ -178,9 +179,6 @@ export default class CTSClient extends Client {
         console.error(e)
       }
     }
-    const mod = extension.constructor as typeof Module
-    mod.commands = []
-    mod.listeners = []
     _.remove(this.registry.modules, (r) => r === extension)
   }
 
