@@ -1,5 +1,6 @@
 import { PermissionResolvable } from 'discord.js'
 import CTSArgument from './CTSArgument'
+import {CTSContext} from "../structures";
 
 type CTSCommand = {
   name: string
@@ -9,7 +10,7 @@ type CTSCommand = {
   ownerOnly: boolean
   userPermissions: PermissionResolvable
   clientPermissions: PermissionResolvable
-  execute: Function
+  execute: (ctx: CTSContext, ...args: any[]) => any
   guildOnly: boolean
   args: CTSArgument[]
 }
