@@ -1,5 +1,5 @@
 type CTSOptions = {
-    prefix: string
+  prefix: string
 }
 
 export default CTSOptions
