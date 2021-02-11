@@ -11,6 +11,6 @@ module.exports = {
     node: true,
   },
   rules: {
-    '@typescript-eslint/no-explicit-any': false
-  }
+    '@typescript-eslint/no-explicit-any': false,
+  },
 }

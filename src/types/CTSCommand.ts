@@ -1,6 +1,6 @@
 import { PermissionResolvable } from 'discord.js'
 import CTSArgument from './CTSArgument'
-import {CTSContext} from "../structures";
+import { CTSContext } from '../structures'
 
 type CTSCommand = {
   name: string
