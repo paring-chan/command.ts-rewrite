@@ -1,2 +1,2 @@
-export * from './decorators/Command'
+export * from './decorators'
 export * from './structures'
