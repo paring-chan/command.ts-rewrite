@@ -9,6 +9,16 @@ jobs:
         with:
           node-version: v15.8.0
       - run: yarn
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        name: Setup node
+        with:
+          node-version: v15.8.0
+      - run: yarn
+      - run: yarn eslint
   docs:
     runs-on: ubuntu-latest
     steps:
