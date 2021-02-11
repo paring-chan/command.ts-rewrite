@@ -1,4 +1,4 @@
-import { Command, CTSClient, CTSContext } from '../dist'
+import {Command, CTSClient, CTSContext, Listener} from '../dist'
 import Module from '../dist/structures/Module'
 
 class TestExtension extends Module {
@@ -25,6 +25,11 @@ class TestExtension extends Module {
   })
   test2(ctx: CTSContext, arg1: string) {
     ctx.reply(arg1)
+  }
+
+  @Listener('ready')
+  ready() {
+    console.log('ready.')
   }
 }
 

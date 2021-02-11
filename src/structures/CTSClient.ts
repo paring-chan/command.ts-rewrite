@@ -5,6 +5,7 @@ import CTSRegistry from '../utils/CTSRegistry'
 import CTSCommand from '../types/CTSCommand'
 import CTSArgument from '../types/CTSArgument'
 import { CTSContext } from './index'
+import _ from "lodash";
 
 export default class CTSClient extends Client {
   opts: CTSOptions
@@ -117,7 +118,7 @@ export default class CTSClient extends Client {
     await this._executeCommand(cmd, args, msg, module)
   }
 
-  loadExtension(path: string) {
+  loadExtension(path: string, watch: boolean = false) {
     let mod
     try {
       mod = require(path)
@@ -130,7 +131,18 @@ export default class CTSClient extends Client {
     if (!(mod.default.prototype instanceof Module)) {
       throw new Error('Default export must extend `Module` class.')
     }
-    const ext = new mod.default()
+    const ext = new mod.default() as Module
+    ext.__path = require.resolve(path)
+    this.registerModule(ext)
+  }
+
+  unregisterModule(extension: Module) {
+    if (extension.__path) {
+      try {
+        delete require.cache[require.resolve(extension.__path)]
+      } catch {}
+    }
+    _.remove(this.registry.modules, r => r === extension)
   }
 
   registerModule(extension: Module) {
