@@ -1,6 +1,6 @@
 type CTSListener = {
-    event: string
-    execute: Function
+  event: string
+  execute: (...args: any[]) => any
 }
 
 export default CTSListener

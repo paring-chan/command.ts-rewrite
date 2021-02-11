@@ -1,5 +1,5 @@
-import Module from "../structures/Module";
+import Module from '../structures/Module'
 
 export default class CTSRegistry {
-    modules: Module[] = []
+  modules: Module[] = []
 }
