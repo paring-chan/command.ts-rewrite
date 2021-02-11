@@ -80,6 +80,7 @@
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function"><a href="modules.html#command" class="tsd-kind-icon">Command</a></li>
+								<li class="tsd-kind-function"><a href="modules.html#listener" class="tsd-kind-icon">Listener</a></li>
 							</ul>
 						</section>
 					</div>
@@ -93,7 +94,7 @@
 					<div class="tsd-signature tsd-kind-icon">Command<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>aliases<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>args<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">CTSArgument</span><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>clientPermissions<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">PermissionResolvable</span><span class="tsd-signature-symbol">; </span>execute<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol">; </span>guildOnly<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>name<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">; </span>ownerOnly<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>subcommands<span class="tsd-signature-symbol">?: </span><a href="modules.html#subcommandoptions" class="tsd-signature-type" data-tsd-kind="Type alias">SubCommandOptions</a><span class="tsd-signature-symbol">[]</span><span class="tsd-signature-symbol">; </span>useSubCommand<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol">; </span>userPermissions<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">PermissionResolvable</span><span class="tsd-signature-symbol"> }</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pikokr/command.ts-rewrite/blob/027fc76/src/decorators/Command.ts#L6">src/decorators/Command.ts:6</a></li>
+							<li>Defined in <a href="https://github.com/pikokr/command.ts-rewrite/blob/cfb4213/src/decorators/Command.ts#L6">src/decorators/Command.ts:6</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-type-declaration">
@@ -138,7 +139,7 @@
 					<div class="tsd-signature tsd-kind-icon">Sub<wbr>Command<wbr>Options<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-symbol">{ </span>execute<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Function</span><span class="tsd-signature-symbol"> }</span><span class="tsd-signature-symbol"> &amp; </span><a href="modules.html#commandoptions" class="tsd-signature-type" data-tsd-kind="Type alias">CommandOptions</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/pikokr/command.ts-rewrite/blob/027fc76/src/decorators/Command.ts#L19">src/decorators/Command.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/pikokr/command.ts-rewrite/blob/cfb4213/src/decorators/Command.ts#L19">src/decorators/Command.ts:19</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -155,13 +156,36 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/pikokr/command.ts-rewrite/blob/027fc76/src/decorators/Command.ts#L65">src/decorators/Command.ts:65</a></li>
+									<li>Defined in <a href="https://github.com/pikokr/command.ts-rewrite/blob/cfb4213/src/decorators/Command.ts#L65">src/decorators/Command.ts:65</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
 									<h5>opts: <a href="modules.html#commandoptions" class="tsd-signature-type" data-tsd-kind="Type alias">CommandOptions</a></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function">
+					<a name="listener" class="tsd-anchor"></a>
+					<h3>Listener</h3>
+					<ul class="tsd-signatures tsd-kind-function">
+						<li class="tsd-signature tsd-kind-icon">Listener<span class="tsd-signature-symbol">(</span>event<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">any</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/pikokr/command.ts-rewrite/blob/cfb4213/src/decorators/Listener.ts#L3">src/decorators/Listener.ts:3</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>event: <span class="tsd-signature-type">string</span></h5>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">any</span></h4>
@@ -197,6 +221,9 @@
 					</li>
 					<li class=" tsd-kind-function">
 						<a href="modules.html#command" class="tsd-kind-icon">Command</a>
+					</li>
+					<li class=" tsd-kind-function">
+						<a href="modules.html#listener" class="tsd-kind-icon">Listener</a>
 					</li>
 				</ul>
 			</nav>
