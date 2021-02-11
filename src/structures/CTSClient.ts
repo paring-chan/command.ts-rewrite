@@ -155,7 +155,6 @@ export default class CTSClient extends Client {
             (r) => r.__path === ext.__path,
           )
           if (extension) {
-            ;(extension.constructor as typeof Module).unload()
             this.unregisterModule(extension)
             this.loadExtension(extension.__path!, true)
             console.info(

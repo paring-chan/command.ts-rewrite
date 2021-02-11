@@ -10,10 +10,6 @@ class Module {
   static commands: CTSCommand[] = []
   static listeners: CTSListener[] = []
   __path?: string
-  static unload(): void {
-    this.commands = []
-    this.listeners = []
-  }
 }
 
 export default Module
