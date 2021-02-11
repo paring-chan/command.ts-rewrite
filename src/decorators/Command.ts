@@ -2,6 +2,7 @@ import CTSCommand from '../types/CTSCommand'
 import { PermissionResolvable, Util } from 'discord.js'
 import Module from '../structures/Module'
 import CTSArgument from '../types/CTSArgument'
+import _ from 'lodash'
 
 export type CommandOptions = {
   name: string
@@ -90,6 +91,9 @@ export function Command(opts: CommandOptions): any {
       execute: descriptor.value,
       guildOnly: !!guildOnly,
       args: opts.args || [],
+    }
+    if (c.commands.find((r) => r.name === opts.name)) {
+      _.remove(c.commands, (r) => r.name === opts.name)
     }
     c.commands.push(cmd)
   }

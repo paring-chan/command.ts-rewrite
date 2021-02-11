@@ -9,6 +9,7 @@ interface Module {
 class Module {
   static commands: CTSCommand[] = []
   static listeners: CTSListener[] = []
+  __path?: string
 }
 
 export default Module

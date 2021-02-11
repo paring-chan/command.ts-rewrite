@@ -4,13 +4,11 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
   ],
   parser: '@typescript-eslint/parser',
-  parserOptions: {
-    project: './tsconfig.json',
-  },
   env: {
     node: true,
   },
   rules: {
-    '@typescript-eslint/no-explicit-any': false,
+    '@typescript-eslint/no-explicit-any': 0,
+    '@typescript-eslint/no-non-null-assertion': 0,
   },
 }
