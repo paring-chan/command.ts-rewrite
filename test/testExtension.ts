@@ -16,20 +16,13 @@ export default class TestExtension extends Module {
         required: true,
       },
     ],
-    subcommands: [
-      {
-        name: 'test',
-        execute: (ctx: CTSContext) => ctx.reply('asdf'),
-      },
-    ],
-    useSubCommand: true,
   })
   test2(ctx: CTSContext, arg1: string) {
-    ctx.reply(arg1)
+    ctx.reply('test')
   }
 
   @Listener('ready')
   ready() {
-    console.log('ready.')
+    console.log('ready!')
   }
 }

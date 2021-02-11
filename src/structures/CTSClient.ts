@@ -131,6 +131,7 @@ export default class CTSClient extends Client {
   loadExtension(path: string, watch = false) {
     let mod
     try {
+      delete require.cache[require.resolve(path)]
       mod = require(path)
     } catch {
       throw new Error('Module not found.')
@@ -142,9 +143,11 @@ export default class CTSClient extends Client {
       throw new Error('Default export must extend `Module` class.')
     }
     const ext = new mod.default() as Module
+
     ext.__path = require.resolve(path)
     this.registerModule(ext)
     if (watch) {
+      if (this.watchers.get(ext.__path)) return
       this.watchers.set(
         ext.__path,
         chokidar.watch(ext.__path).on('change', () => {
@@ -153,14 +156,13 @@ export default class CTSClient extends Client {
           )
           if (extension) {
             this.unregisterModule(extension)
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             this.loadExtension(extension.__path!, true)
             console.info(
               `[COMMAND.TS] Reloaded extension ${extension.constructor.name}.`,
             )
           } else {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             this.watchers.get(ext.__path!)?.unwatch(ext.__path!)
+            this.watchers.delete(ext.__path!)
           }
         }),
       )
@@ -172,8 +174,13 @@ export default class CTSClient extends Client {
     if (extension.__path) {
       try {
         delete require.cache[require.resolve(extension.__path)]
-      } catch {}
+      } catch (e) {
+        console.error(e)
+      }
     }
+    const mod = extension.constructor as typeof Module
+    mod.commands = []
+    mod.listeners = []
     _.remove(this.registry.modules, (r) => r === extension)
   }
 
