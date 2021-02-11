@@ -46,8 +46,12 @@ export default class CTSClient extends Client {
     const res: any[] = []
     for (const i in types) {
       const type = types[i]
+      const current =
+        type.rest && ((i as unknown) as number) === types.length - 1
+          ? args.join(' ')
+          : args.shift() || ''
       if (type.required) {
-        if (!args[i]) {
+        if (!current) {
           this.emit('argRequired')
           return false
         }
@@ -55,13 +59,13 @@ export default class CTSClient extends Client {
       let t
       if (type.converter) {
         try {
-          t = await type.converter(msg, args[i])
+          t = await type.converter(msg, current)
         } catch (e) {
           this.emit('argParseError', e)
           return false
         }
       } else {
-        t = args[i]
+        t = current
       }
       res.push(t)
     }
