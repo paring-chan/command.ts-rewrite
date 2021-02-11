@@ -1,16 +1,24 @@
-import { Client, ClientEvents, ClientOptions, Message } from 'discord.js'
+import {
+  Client,
+  ClientEvents,
+  ClientOptions,
+  Collection,
+  Message,
+} from 'discord.js'
 import CTSOptions from '../types/CTSOptions'
 import Module from './Module'
 import CTSRegistry from '../utils/CTSRegistry'
 import CTSCommand from '../types/CTSCommand'
 import CTSArgument from '../types/CTSArgument'
 import { CTSContext } from './index'
-import _ from "lodash";
+import _ from 'lodash'
+import chokidar from 'chokidar'
 
 export default class CTSClient extends Client {
   opts: CTSOptions
   registry: CTSRegistry
   owners: string[] = []
+  watchers: Collection<string, chokidar.FSWatcher> = new Collection()
 
   constructor(ctsOpts: CTSOptions, clientOptions?: ClientOptions) {
     super(clientOptions)
@@ -67,7 +75,8 @@ export default class CTSClient extends Client {
     module: Module,
   ): Promise<any> {
     if (cmd.guildOnly && !msg.guild) return this.emit('guildOnly', msg, cmd)
-    if (cmd.ownerOnly) return this.emit('guildOnly', msg, cmd)
+    if (cmd.ownerOnly && !this.owners.includes(msg.author.id))
+      return this.emit('guildOnly', msg, cmd)
     if (args.length) {
       if (cmd.useSubCommand) {
         const arg = args.shift()
@@ -118,7 +127,8 @@ export default class CTSClient extends Client {
     await this._executeCommand(cmd, args, msg, module)
   }
 
-  loadExtension(path: string, watch: boolean = false) {
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
+  loadExtension(path: string, watch = false) {
     let mod
     try {
       mod = require(path)
@@ -134,17 +144,40 @@ export default class CTSClient extends Client {
     const ext = new mod.default() as Module
     ext.__path = require.resolve(path)
     this.registerModule(ext)
+    if (watch) {
+      this.watchers.set(
+        ext.__path,
+        chokidar.watch(ext.__path).on('change', () => {
+          const extension = this.registry.modules.find(
+            (r) => r.__path === ext.__path,
+          )
+          if (extension) {
+            this.unregisterModule(extension)
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            this.loadExtension(extension.__path!, true)
+            console.info(
+              `[COMMAND.TS] Reloaded extension ${extension.constructor.name}.`,
+            )
+          } else {
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            this.watchers.get(ext.__path!)?.unwatch(ext.__path!)
+          }
+        }),
+      )
+    }
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   unregisterModule(extension: Module) {
     if (extension.__path) {
       try {
         delete require.cache[require.resolve(extension.__path)]
       } catch {}
     }
-    _.remove(this.registry.modules, r => r === extension)
+    _.remove(this.registry.modules, (r) => r === extension)
   }
 
+  // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
   registerModule(extension: Module) {
     extension.client = this
     this.registry.modules.push(extension)
