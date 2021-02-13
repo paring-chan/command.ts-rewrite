@@ -21,8 +21,8 @@ export default class CTSClient extends Client {
   owners: string[] = []
   watchers: Collection<string, chokidar.FSWatcher> = new Collection()
 
-  constructor(ctsOpts: CTSOptions, clientOptions?: ClientOptions) {
-    super({ intents: Intents.ALL, ...(clientOptions || {}) })
+  constructor(ctsOpts: CTSOptions, clientOptions: ClientOptions) {
+    super(clientOptions)
     this.opts = ctsOpts
     this.registry = new CTSRegistry()
   }
