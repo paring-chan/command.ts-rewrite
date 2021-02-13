@@ -21,7 +21,7 @@ export default class CTSClient extends Client {
   watchers: Collection<string, chokidar.FSWatcher> = new Collection()
 
   constructor(ctsOpts: CTSOptions, clientOptions?: ClientOptions) {
-    super(clientOptions)
+    super(clientOptions!)
     this.opts = ctsOpts
     this.registry = new CTSRegistry()
   }
